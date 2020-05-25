@@ -10,6 +10,12 @@ class CLIClient(host: String) {
 
   private val client = new Client(host)
 
+  def printCli(msg: String): Unit = {
+    val trimmed = if (msg.startsWith("\n")) msg.replaceFirst("\n", "") else msg
+    if (trimmed.endsWith("\n")) print(trimmed)
+    else println(trimmed)
+  }
+
   def runCli(): Unit = {
     var running = true
     print("enter name: ")
@@ -29,7 +35,7 @@ Type 'exit' while not in room to stop""")
           running = false
         case connect: String => if (connect.contains("connect")) {
           val roomId = connect.replaceAll("connect", "").trim.toInt
-          chat(client.connectToRoom(s"schat/room/$roomId?name=$name", println))
+          chat(client.connectToRoom(s"schat/room/$roomId?name=$name", printCli))
         } else println("unknown command")
       }
     }

@@ -26,7 +26,7 @@ class ChatRoomActor(roomId: Int) extends Actor {
   def logMsg(msg: String): Unit = {
     println(s"\n[log] $msg $roomId")
     broadcast(ChatMsg("system", msg))
-    roomHistory = roomHistory ++ List(s"system > $msg\n")
+    roomHistory = roomHistory ++ List(s"system : $msg\n")
   }
 
   def broadcast(message: ChatMsg): Unit = participants.values.foreach(_ ! message)
